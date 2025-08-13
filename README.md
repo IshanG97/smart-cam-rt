@@ -1,4 +1,4 @@
-## 📁 SmartCamRT – Real-Time Smart Camera Inference Optimizer
+## 📷 SmartCamRT – Real-Time Smart Camera Inference Optimizer
 
 **SmartCamRT** is a real-time object detection and performance optimization engine designed for edge devices. It enables developers to easily deploy, monitor, and optimize AI models using various inference runtimes such as ONNX Runtime, TensorRT, TensorFlow Lite, and ExecuTorch. The system supports runtime switching, model compression, performance logging, and deployment to real edge platforms like Raspberry Pi or Android.
 
@@ -66,37 +66,57 @@ smartcamrt/
 ---
 
 ### ✅ Getting Started
-
-Create `.env` file from existing `.env.example` file. Update values in `.env`
+#### One time setup
 ```bash
+#1. Create `.env` file from existing `.env.example` file. Update values in `.env`
 cp .env.example .env
-```
 
-Set up a dedicated virtual environment to run the service
-```bash
-# install uv if you haven't already - https://docs.astral.sh/uv/getting-started/installation/
-# curl -LsSf https://astral.sh/uv/install.sh | sh # macOS/Linux
-# powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" # Windows
+#2. Install uv if you haven't already - https://docs.astral.sh/uv/getting-started/installation/
+curl -LsSf https://astral.sh/uv/install.sh | sh # macOS/Linux
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" # Windows
 
+#3. Option A: Use a Python version managed by uv (recommended)
 uv python install 3.12
+# Setup venv with uv installed Python version
+uv venv --python 3.12
 
+#3. Option B: Use system-installed Python 3.12
+brew install python@3.12
+# Explicitly specify system Python version
+uv venv -p $(which python3.12)
+
+#4. Initialize pyproject.toml for dependency management
+uv init
+rm hello.py
+
+#5. Install project dependencies
 uv sync --extra dev
-```
 
-Activate the environment to run commands without the `uv run` prefix
-```bash
+#6. Activate the environment to run commands without the `uv run` prefix
+# macOS
 source .venv/bin/activate
-# .\.venv\Scripts\activate.ps1 # Windows
-```
+# Windows
+.\.venv\Scripts\activate.ps1
 
-install `pre-commit` git hook scripts
-```bash
+#7. Install `pre-commit` git hook scripts
 pre-commit install
+
 ```
 
-Run your first inference:
+#### Daily workflow
 ```bash
+#1. Activate the environment to run commands without the `uv run` prefix
+# macOS
+source .venv/bin/activate
+# Windows
+.\.venv\Scripts\activate.ps1
+
+#2. Run your inference e.g.
 python smartcamrt/core/inference/onnx_runtime.py
+
+#3. Re-sync dependencies after any modifications
+uv sync --extra dev
+
 ```
 
 ---
